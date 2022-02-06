@@ -41,7 +41,7 @@ export default {
  },
  methods: {
    submit () {
-     const db = firebase.firestore()
+       const db = this.$firebase.firestore()
      let dbUsers = db.collection('users')
      dbUsers
        .add({
