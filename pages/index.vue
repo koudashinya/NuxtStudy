@@ -40,17 +40,14 @@ export default {
  },
  methods: {
    submit () {
-       const db = this.$firebase.firestore()
-     let dbUsers = db.collection('users')
-     dbUsers
-       .add({
-         name: this.user.name,
-         email: this.user.email,
-       })
-       .then(ref => {
-         console.log('Add ID: ', ref.id)
-       })
+      const db = firebase.firestore()
+      let dbUsers = db.collection('users')
+        dbUsers
+        .add({
+          name: this.user.name,
+          email: this.user.email,
+        })
+      },
    },
- },
 }
 </script>
