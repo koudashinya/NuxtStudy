@@ -24,11 +24,19 @@
    >
      Submit
    </button>
+   <br>
+
+   <button
+    type="button"
+    @click="getData">
+    getData
+   </button>
+   <div id="user.name" />
  </div>
 </template>
 
 <script>
-import firebase from '@/plugins/firebase'
+
 export default {
  data () {
    return {
@@ -40,14 +48,24 @@ export default {
  },
  methods: {
    submit () {
-      const db = firebase.firestore()
-      let dbUsers = db.collection('users')
-        dbUsers
-        .add({
-          name: this.user.name,
-          email: this.user.email,
-        })
-      },
+     let dbUsers = this.$firestore.collection('users')
+     dbUsers
+       .add({
+         name: this.user.name,
+         email: this.user.email,
+       })
+       .then(ref => {
+         console.log('Add ID: ', ref.id)
+       })
    },
+   getData () {
+     let docUsers = this.$firestore.collection('users').doc('OD7LcfncYmf2q68p5ANl')
+     docUsers
+      .get()
+      .then(function(doc) {
+        document.getElementById("user.name").innerHTML = (doc.data().name)
+      })
+   },
+ },
 }
 </script>
