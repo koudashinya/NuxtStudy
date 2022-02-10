@@ -29,9 +29,9 @@
    <button
     type="button"
     @click="getData">
-    getData
+    getchData
    </button>
-   <div id="user.name" />
+   <p>{{ dbData }}</p>
  </div>
 </template>
 
@@ -44,6 +44,7 @@ export default {
        name: "",
        email: ""
      },
+     dbData: "",
    }
  },
  methods: {
@@ -60,10 +61,11 @@ export default {
    },
    getData () {
      let docUsers = this.$firestore.collection('users').doc('OD7LcfncYmf2q68p5ANl')
-     docUsers
-      .get()
+     let dbData = []
+     this.dbData = dbData
+     docUsers.get()
       .then(function(doc) {
-        document.getElementById("user.name").innerHTML = (doc.data().name)
+        dbData.push(doc.data().name) // DBの中のdataのname
       })
    },
  },
