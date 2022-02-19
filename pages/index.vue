@@ -75,12 +75,6 @@ export default {
         this.todos.push(todo)
         // textboxリセット処理
         this.newItem = ""
-        // 空文字入力はスルー
-        // if(this.newItem === "") return
-        // todoオブジェクトを作成して配列で出力できるように
-        // let todo = {
-        //   item: this.newItem
-        // }
       },
       // 削除処理
       deleteItem: function(index) {
