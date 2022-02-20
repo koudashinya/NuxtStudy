@@ -68,12 +68,15 @@
     <option value="沖縄県">沖縄県</option>
   </select>
   <div class="adddbUser">
-    <button type="button" v-on:click="submit">保存</button>
+    <button type="button" @click="submit">保存</button>
   </div>
   <br>
+  <div class="getdataPage">
+    <button @click="getData"><nuxt-link to="/getUser">取得データを見る</nuxt-link></button>
   <br>
   <div class="userHome">
     <button><nuxt-link to="/">HOMEへ戻る</nuxt-link></button>
+  </div>
   </div>
   </div>
 </template>
@@ -101,17 +104,17 @@ export default {
       .then(ref => {
         console.log('Add ID: ', ref.id);
       })
+    },
+    getData() {
+      const dbUsers = this.$firestore.collection('users')
+      dbUsers.doc('ag53CThTWnsHvabWGbEK')
+      .get()
+      .then(function(doc) {
+        document.getElementById("user.name").innerHTML = (doc.data().name),
+        document.getElementById("user.email").innerHTML = (doc.data().email),
+        document.getElementById("user.prefecture").innerHTML = (doc.data().prefecture)
+      })
     }
-    // getData() {
-    //   const dbUsers = this.$firestore.collection('users')
-    //   dbUsers.doc('ag53CThTWnsHvabWGbEK')
-    //   .get()
-    //   .then(function(doc) {
-    //     document.getElementById("user.name").innerHTML = (doc.data().name),
-    //     document.getElementById("user.email").innerHTML = (doc.data().email),
-    //     document.getElementById("user.prefecture").innerHTML = (doc.data().prefecture)
-    //   })
-    // }
   }
 }
 </script>
