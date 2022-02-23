@@ -5,20 +5,17 @@
     <span>
       お名前:
     </span>
-    <input
-      type="text"
-      v-model="user.name"
-    >
+    <input type="text" v-model="user.name">
   </label>
   <label>
     <span>
       email:
     </span>
-    <input type="text" v-model="user.email">
+    <input type="text"  v-model="user.email" >
   </label>
   <br>
   <select name="pref_id" v-model="user.prefecture">
-    <option value="">選択してください</option>
+    <option value=""><div id="user.prefecture" />選択してください</option>
     <option value="北海道">北海道</option>
     <option value="青森県">青森県</option>
     <option value="岩手県">岩手県</option>
@@ -72,10 +69,12 @@
   </div>
   <br>
   <div class="getdataPage">
-    <button @click="getData"><nuxt-link to="/getUser">取得データを見る</nuxt-link></button>
+    <button @click="getData">取得データを見る</button>
   <br>
   <div class="userHome">
     <button><nuxt-link to="/">HOMEへ戻る</nuxt-link></button>
+  </div>
+  <div class="getUser">
   </div>
   </div>
   </div>
@@ -94,25 +93,29 @@ export default {
 },
   methods: {
     submit() {
-      const dbUsers = this.$firestore.collection('users')
-      dbUsers.doc('ag53CThTWnsHvabWGbEK')
+      const dbSet = this.$firestore.collection('users')
+      dbSet.doc('ag53CThTWnsHvabWGbEK')
       .set({
         name: this.user.name,
         email: this.user.email,
-        prefecture: this.user.prefecture,
-      }) 
+        prefecture: this.user.prefecture
+      })
       .then(ref => {
-        console.log('Add ID: ', ref.id);
+        //console.log('Add ID: ', ref.id);
+        this.user.name = "",
+        this.user.email = "",
+        this.user.prefecture = ""
       })
     },
+    // データ取得
+    // dataの中に入れてバインドさせる
     getData() {
-      const dbUsers = this.$firestore.collection('users')
-      dbUsers.doc('ag53CThTWnsHvabWGbEK')
-      .get()
-      .then(function(doc) {
-        document.getElementById("user.name").innerHTML = (doc.data().name),
-        document.getElementById("user.email").innerHTML = (doc.data().email),
-        document.getElementById("user.prefecture").innerHTML = (doc.data().prefecture)
+      const dbGet = this.$firestore.collection('users')
+      dbGet.doc('ag53CThTWnsHvabWGbEK')
+      .get().then((doc) => {
+        this.user.name = doc.data().name
+        this.user.email = doc.data().email
+        this.user.prefecture = doc.data().prefecture
       })
     }
   }
